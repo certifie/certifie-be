@@ -1,6 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { CERTIFICATES } from '../mocks/ceritificates.mock';
 import { Certificate } from './certificate.entity';
+import { CreateСertificateDTO } from './dto/create-certificate.dto';
 
 @Injectable()
 export class CertificatesService {
@@ -13,11 +14,23 @@ export class CertificatesService {
   public getCertificate(certificateId: string): Promise<Certificate> {
     const id = Number(certificateId);
     return new Promise<any>(resolve => {
-      const certificate = this.certificates.find(selectedBook => selectedBook.id === id);
+      const certificate = this.certificates.find(selectedCertificate => selectedCertificate.id === id);
       if (!certificate) {
         throw new HttpException('Certificate does not exist!', 404);
       }
       resolve(certificate);
+    });
+  }
+
+  public updateCertificate(certificateDTO: CreateСertificateDTO, certificateId: string): Promise<Certificate> {
+    const id = Number(certificateId);
+    return new Promise<any>(resolve => {
+      const index = this.certificates.findIndex(book => book.id === id);
+      if (index === -1) {
+        throw new HttpException('Certificate does not exist!', 404);
+      }
+      this.certificates[index] = {...certificateDTO};
+      resolve(this.certificates[index]);
     });
   }
 
@@ -35,7 +48,7 @@ export class CertificatesService {
       if (index === -1) {
         throw new HttpException('Certificate does not exist!', 404);
       }
-      this.certificates = this.certificates.filter(book => book.id !== id);
+      this.certificates = this.certificates.filter(certificate => certificate.id !== id);
       resolve(this.certificates);
     });
   }

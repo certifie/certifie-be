@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CertificatesService } from './certificates.service';
 import { CreateСertificateDTO } from './dto/create-certificate.dto';
 
@@ -11,9 +11,14 @@ export class CertificatesController {
     return await this.certificatesSvc.getCertificates();
   }
 
-  @Get(':bookId')
-  async getCertificate(@Param('bookId') bookId) {
-    return await this.certificatesSvc.getCertificate(bookId);
+  @Get(':certificateId')
+  async getCertificate(@Param('certificateId') certificateId) {
+    return await this.certificatesSvc.getCertificate(certificateId);
+  }
+
+  @Put(':certificateId')
+  async updateCertificate(@Body() createCertificateDTO: CreateСertificateDTO, @Param('certificateId') certificateId) {
+    return await this.certificatesSvc.updateCertificate(createCertificateDTO, certificateId);
   }
 
   @Post()
@@ -23,6 +28,6 @@ export class CertificatesController {
 
   @Delete()
   async deleteCertificate(@Query() query) {
-    return await this.certificatesSvc.deleteCertificate(query.bookId);
+    return await this.certificatesSvc.deleteCertificate(query.certificateId);
   }
 }
