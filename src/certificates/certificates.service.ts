@@ -34,9 +34,9 @@ export class CertificatesService {
     });
   }
 
-  public addCertificate(book): Promise<Certificate[]> {
+  public addCertificate(certificate: CreateСertificateDTO): Promise<Certificate[]> {
     return new Promise(resolve => {
-      this.certificates = [...this.certificates, book];
+      this.certificates = [...this.certificates, certificate];
       resolve(this.certificates);
     });
   }
