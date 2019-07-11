@@ -26,8 +26,8 @@ export class CertificatesController {
     return await this.certificatesSvc.addCertificate(createCertificateDTO);
   }
 
-  @Delete()
-  async deleteCertificate(@Query() query) {
-    return await this.certificatesSvc.deleteCertificate(query.certificateId);
+  @Delete(':certificateId')
+  async deleteCertificate(@Param('certificateId') certificateId) {
+    return await this.certificatesSvc.deleteCertificate(certificateId);
   }
 }

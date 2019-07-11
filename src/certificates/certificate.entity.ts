@@ -1,16 +1,24 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@Entity()
-export class Certificate {
-  @PrimaryGeneratedColumn()
-  id: number;
+@Entity('certificates')
+export class CertificateEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column({length: 25})
+  @CreateDateColumn()
+  created: Date;
+
+  @Column()
   title: string;
 
-  @Column({length: 100})
+  @Column()
   description: string;
 
-  @Column({length: 100})
+  @Column()
   authority: string;
 }
