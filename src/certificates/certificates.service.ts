@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CertificateEntity } from './certificate.entity';
 import { CreateСertificateDTO } from './dto/create-certificate.dto';
 import { Repository } from 'typeorm';
@@ -16,7 +16,11 @@ export class CertificatesService {
   }
 
   public async getCertificate(id: string): Promise<CertificateEntity> {
-    return await this.certificatesRepository.findOne({ where: {id}});
+    const certificate = await this.certificatesRepository.findOne({ where: {id}});
+    if (!certificate) {
+      throw new NotFoundException('Certificate not found!');
+    }
+    return certificate;
   }
 
   public async updateCertificate(certificateDTO: CreateСertificateDTO, id: string): Promise<any> {
@@ -33,10 +37,10 @@ export class CertificatesService {
   public async deleteCertificate(id: string): Promise<any> {
     const certificate = await this.certificatesRepository.findOne({ where: {id}});
     if (!certificate) {
-      throw new HttpException('Certificate does not exist!', 404);
+      throw new NotFoundException('Certificate not found!');
     }
 
     await this.certificatesRepository.delete({id});
-    return await this.certificatesRepository.find();
+    return certificate;
   }
 }

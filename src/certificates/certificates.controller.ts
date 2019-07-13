@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
 import { CertificatesService } from './certificates.service';
 import { CreateСertificateDTO } from './dto/create-certificate.dto';
 import { CertificateDTOValidator } from './validators/CertificateDTO.validator';
