@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CertificatesModule } from './certificates/certificates.module';
 import { CertificateEntity } from './certificates/certificate.entity';
+import { UserModule } from './user/user.module';
+import { UserEntity } from './user/user.entity';
 
 @Module({
   imports: [
@@ -16,9 +18,10 @@ import { CertificateEntity } from './certificates/certificate.entity';
       database: 'certifie',
       synchronize: true,
       logging: true,
-      entities: [CertificateEntity],
+      entities: [CertificateEntity, UserEntity],
     }),
-    CertificatesModule],
+    CertificatesModule,
+    UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
